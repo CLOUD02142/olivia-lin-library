@@ -1,0 +1,35 @@
+# ---- 生成的曲库产物：包含本机绝对路径与版权音频，不进仓库 ----
+曲库.html
+library.json
+.probe-cache.json
+无损 m4a/
+mp3 256k/
+封面/
+原版视频/
+我的音乐/
+
+# ---- 任何音视频文件都不进仓库 ----
+*.m4a
+*.mp3
+*.flac
+*.ogg
+*.oga
+*.opus
+*.ape
+*.wma
+*.wav
+*.aac
+*.mp4
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# ---- 杂项 ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+Thumbs.db
+desktop.ini
+.DS_Store

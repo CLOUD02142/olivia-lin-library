@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>林离 · 钢琴曲库</title>
+<style>
+  :root{
+    --paper:#f5efe4;
+    --card:#fffdf8;
+    --ink:#211b15;
+    --ink-2:#5f554a;
+    --line:#e2d7c5;
+    --accent:#8a4f33;
+    --accent-soft:#f0e2d6;
+    --gold:#b3893f;
+    --serif:"Songti SC","STSong","Noto Serif SC","SimSun",serif;
+    --sans:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 500px at 12% -10%, #fdf9f0 0%, rgba(253,249,240,0) 60%),
+      radial-gradient(900px 480px at 105% 0%, #f7ece0 0%, rgba(247,236,224,0) 55%),
+      var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:120px;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:40px 28px 0}
+
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:16px}
+  .disc{
+    width:58px;height:58px;border-radius:50%;flex:0 0 auto;position:relative;
+    background:radial-gradient(circle at 50% 50%, #f7f1e6 0 17%, #2a231d 17.5% 18.5%, #2a231d 18.5% 100%);
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.25), 0 6px 16px rgba(90,66,44,.22);
+  }
+  .disc::before{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.055) 0 1px, rgba(0,0,0,0) 1px 4px);
+  }
+  .disc::after{
+    content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;margin:-3.5px 0 0 -3.5px;
+    border-radius:50%;background:var(--paper);box-shadow:0 0 0 1px rgba(0,0,0,.3);
+  }
+  .disc.spin{animation:spin 7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  h1{font-family:var(--serif);font-size:25px;font-weight:600;letter-spacing:.06em;margin:0 0 5px}
+  .sub{margin:0;font-size:12px;color:var(--ink-2);letter-spacing:.04em}
+  .stats{display:flex;gap:22px}
+  .stat{text-align:right}
+  .stat b{display:block;font-family:var(--serif);font-size:20px;font-weight:600;line-height:1.1;color:var(--accent)}
+  .stat span{font-size:10.5px;color:var(--ink-2);letter-spacing:.12em;white-space:nowrap}
+
+  .rule{height:1px;background:linear-gradient(90deg,var(--line),rgba(230,220,204,0));margin:24px 0 18px}
+
+  .toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chip{
+    border:1px solid var(--line);background:transparent;color:var(--ink-2);
+    padding:6px 13px;border-radius:999px;font-size:12.5px;cursor:pointer;
+    font-family:var(--sans);transition:.16s;letter-spacing:.03em;
+  }
+  .chip:hover{border-color:#d2c3ac;color:var(--ink)}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff8f0}
+  .search{
+    border:1px solid var(--line);background:var(--card);border-radius:999px;
+    padding:7px 14px;font-size:12.5px;width:180px;outline:none;color:var(--ink);
+    font-family:var(--sans);transition:.16s;
+  }
+  .search:focus{border-color:#cbb79b;box-shadow:0 0 0 3px rgba(179,137,63,.1)}
+  .search::placeholder{color:#b3a698}
+
+  ol.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .row{
+    display:grid;grid-template-columns:34px 1fr auto 82px 62px;align-items:center;gap:12px;
+    padding:10px;border-bottom:1px solid var(--line);cursor:pointer;
+    transition:background .14s;position:relative;
+  }
+  .row:hover{background:rgba(255,253,248,.85)}
+  .row.on{background:var(--accent-soft)}
+  .row.on::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent)}
+  .idx{font-size:11.5px;color:#a2937f;text-align:right;font-variant-numeric:tabular-nums}
+  .row.on .idx{color:var(--accent)}
+  .meta{min-width:0}
+  .t{display:block;font-family:var(--serif);font-size:16.5px;letter-spacing:.02em;color:#1d1812;
+     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .a{display:block;font-size:11.5px;color:var(--ink-2);margin-top:2px;letter-spacing:.03em;
+     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cat{font-size:11px;color:#6d6154;border:1px solid var(--line);border-radius:4px;
+       padding:2px 7px;letter-spacing:.08em;white-space:nowrap}
+  .cat.mine{color:#4f6a52;border-color:#cfdccc;background:#f2f6f1}
+  .dur{font-size:12px;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
+  .st{font-size:11px;text-align:right;letter-spacing:.06em}
+  .st.ok{color:var(--accent);font-weight:600}
+  .st.mine{color:#4f6a52;font-weight:600}
+  .st.no{color:#b0a292}
+  .row.miss .t{color:#655b4f}
+  .row.miss .a{color:#8e8272}
+  .row.miss:hover{background:rgba(255,253,248,.6)}
+
+  .empty{padding:48px 0;text-align:center;color:var(--ink-2);font-size:13px}
+
+  details.note{margin:28px 0 8px;border-top:1px solid var(--line);padding-top:14px}
+  details.note summary{cursor:pointer;font-size:12.5px;color:var(--accent);letter-spacing:.05em;
+    list-style:none;outline:none}
+  details.note summary::-webkit-details-marker{display:none}
+  details.note summary::before{content:"？ "}
+  details.note p{font-size:12.5px;line-height:1.95;color:var(--ink-2);margin:11px 0;letter-spacing:.02em}
+  details.note code{font-size:11.5px;background:#efe6d7;padding:2px 6px;border-radius:3px;
+    color:#6b5540;word-break:break-all}
+  footer{margin:30px 0 0;font-size:11px;color:#b3a698;letter-spacing:.08em;text-align:center}
+
+  .player{
+    position:fixed;left:0;right:0;bottom:0;z-index:20;
+    background:rgba(255,253,248,.95);backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(120,95,65,.06);
+  }
+  .inner{max-width:940px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:16px}
+  .play{
+    width:42px;height:42px;border-radius:50%;border:none;background:var(--accent);color:#fff8f0;
+    font-size:15px;cursor:pointer;flex:0 0 auto;display:grid;place-items:center;
+    box-shadow:0 4px 12px rgba(138,79,51,.28);transition:.16s;
+  }
+  .play:hover{background:#7a4429}
+  .now{flex:0 0 180px;min-width:0}
+  .now .nt{display:block;font-family:var(--serif);font-size:14px;
+           white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .now .na{display:block;font-size:11px;color:var(--ink-2);margin-top:1px;
+           white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar{flex:1;display:flex;align-items:center;gap:10px}
+  .track{flex:1;height:3px;background:#e8ddca;border-radius:2px;position:relative;cursor:pointer}
+  .track:hover{height:5px}
+  .fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:2px;width:0}
+  .time{font-size:11px;color:var(--ink-2);font-variant-numeric:tabular-nums;flex:0 0 auto}
+  .vol{-webkit-appearance:none;appearance:none;width:72px;height:3px;border-radius:2px;
+    background:#e2d7c5;outline:none;flex:0 0 auto;cursor:pointer}
+  .vol::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;
+    background:var(--accent);cursor:pointer;border:none;box-shadow:0 1px 3px rgba(80,50,30,.35)}
+  .vol::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:var(--accent);
+    border:none;cursor:pointer}
+  .fmt{display:flex;gap:4px;flex:0 0 auto}
+  .fmt button{border:1px solid var(--line);background:transparent;color:var(--ink-2);
+    font-size:10.5px;padding:3px 6px;border-radius:3px;cursor:pointer;letter-spacing:.05em}
+  .fmt button.on{border-color:var(--accent);color:var(--accent)}
+  .fmt.hide{display:none}
+
+  .toast{
+    position:fixed;left:50%;bottom:104px;transform:translate(-50%,14px);
+    background:rgba(38,32,26,.92);color:#f7efe2;font-size:12.5px;letter-spacing:.03em;
+    padding:9px 18px;border-radius:999px;opacity:0;pointer-events:none;transition:.22s;z-index:30;
+    max-width:80vw;text-align:center;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media(max-width:760px){
+    .wrap{padding:24px 16px 0}
+    .row{grid-template-columns:26px 1fr auto 56px;gap:8px}
+    .cat{display:none}
+    .now,.vol,.fmt{display:none}
+    .stats{gap:14px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="disc" id="disc"></div>
+      <div>
+        <h1>林离 · 钢琴曲库</h1>
+        <p class="sub">BSide: Olivia Lin 离线版 · 本地音轨 + 本地音乐</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="s-local">—</b><span>已导出</span></div>
+      <div class="stat"><b id="s-total">—</b><span>曲目总数</span></div>
+      <div class="stat"><b id="s-mine">—</b><span>我的音乐</span></div>
+      <div class="stat"><b id="s-time">—</b><span>演奏时长</span></div>
+    </div>
+  </header>
+
+  <div class="rule"></div>
+
+  <div class="toolbar">
+    <div class="chips" id="chips">
+      <button class="chip on" data-f="all">全部</button>
+      <button class="chip" data-f="古典">古典</button>
+      <button class="chip" data-f="原创">原创</button>
+      <button class="chip" data-f="弹唱">弹唱</button>
+      <button class="chip" data-f="我的音乐">我的音乐</button>
+      <button class="chip" data-f="local">已导出</button>
+    </div>
+    <input class="search" id="q" placeholder="搜曲名 / 艺术家">
+  </div>
+
+  <ol class="list" id="list"></ol>
+  <div class="empty" id="empty" style="display:none">没有匹配的曲目</div>
+
+  <details class="note">
+    <summary>为什么林离的曲目大半是「未获取」</summary>
+    <p>林离的每一首演奏都是<b>预录视频</b>，不随安装包下发。原版点「下载」时，由服务器签发一条带时效签名的链接，再从 CDN 拉取 2K 视频（单曲约 150–280&nbsp;MB）。</p>
+    <p>2026 年 8 月 31 日关服，签发链接的接口随之关闭。CDN 本身还活着，但没有签名的请求一律 <code>401</code>，而签名密钥只存在于服务端——所以除了当时已经下载到本地的曲目，其余无法再取回。</p>
+    <p>「已导出」的那些，是从本地缓存视频里无损拆出来的音轨：<code>cache/studio/video/&lt;曲名&gt;/&lt;曲名&gt;_TOD1200_NI_L.mp4</code>。同一首曲子的 12:00 / 17:30 / 20:00 三个版本是同一次演奏、不同打光，所以只保留了一份。</p>
+    <p>「我的音乐」是你自己电脑上的音频，只登记路径、不复制文件，所以原文件被删掉这里也就放不了了。</p>
+  </details>
+
+  <footer>仅供个人离线欣赏 · 曲目版权归米哈游 / 原著作权人所有</footer>
+</div>
+
+<div class="player">
+  <div class="inner">
+    <button class="play" id="play">▶</button>
+    <div class="now">
+      <span class="nt" id="nt">未播放</span>
+      <span class="na" id="na">点一首开始</span>
+    </div>
+    <div class="bar">
+      <span class="time" id="t1">00:00</span>
+      <div class="track" id="track"><div class="fill" id="fill"></div></div>
+      <span class="time" id="t2">00:00</span>
+    </div>
+    <div class="fmt" id="fmt">
+      <button data-k="m4a" class="on">m4a</button>
+      <button data-k="mp3">mp3</button>
+    </div>
+    <input type="range" class="vol" id="vol" min="0" max="100" value="85">
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<audio id="audio" preload="metadata"></audio>
+
+<script>
+const LIB = __LIBRARY_DATA__;
+
+const $ = s => document.querySelector(s);
+const audio = $('#audio');
+const listEl = $('#list');
+const toastEl = $('#toast');
+
+const MINE = '我的音乐';
+const PLAYABLE = ['mp3','aac','mp4a','vorbis','opus','flac','alac','pcm_s16le','pcm_s24le'];
+const isMine = r => r.cat === MINE;
+const isLocal = r => isMine(r) ? !!(r.m4a || r.abs) : !!r.m4a;
+
+let filter = 'all';
+let query = '';
+let format = 'm4a';
+let current = null;
+const rows = LIB.tracks;
+
+const mmss = s => {
+  if (!isFinite(s) || s < 0) s = 0;
+  s = Math.round(s);
+  return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+};
+const encRel = p => encodeURI(p);
+const absUrl = p => 'file:///' + encodeURI(p.replace(/\\/g, '/')).replace(/#/g, '%23').replace(/\?/g, '%3F');
+
+let toastTimer;
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2800);
+}
+
+/* ---- 顶部统计 ---- */
+const localCount = rows.filter(r => !isMine(r) && r.m4a).length;
+$('#s-local').textContent = localCount;
+$('#s-total').textContent = LIB.stats.total;
+$('#s-mine').textContent = LIB.stats.imported;
+$('#s-time').textContent = mmss(LIB.stats.seconds);
+
+/* ---- 渲染 ---- */
+function visible(r){
+  if (filter === 'local') return !isMine(r) && !!r.m4a;
+  if (filter !== 'all' && r.cat !== filter) return false;
+  if (query){
+    const hay = (r.title + ' ' + r.artist + ' ' + r.key).toLowerCase();
+    if (!hay.includes(query.toLowerCase())) return false;
+  }
+  return true;
+}
+
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function render(){
+  const shown = rows.filter(visible);
+  $('#empty').style.display = shown.length ? 'none' : 'block';
+
+  const frag = document.createDocumentFragment();
+  for (const r of shown){
+    const li = document.createElement('li');
+    const local = isLocal(r);
+    li.className = 'row' + (local ? '' : ' miss') + (current && current.key === r.key ? ' on' : '');
+    li.dataset.key = r.key;
+
+    let idx, badge;
+    if (isMine(r)){ idx = '♪'; badge = '<span class="st mine">本地</span>'; }
+    else if (local){ idx = String(r.i).padStart(2, '0'); badge = '<span class="st ok">已导出</span>'; }
+    else { idx = String(r.i).padStart(2, '0'); badge = '<span class="st no">未获取</span>'; }
+
+    li.innerHTML =
+      '<span class="idx">' + idx + '</span>' +
+      '<span class="meta"><span class="t">' + esc(r.title) + '</span><span class="a">' + esc(r.artist) + '</span></span>' +
+      '<span class="cat' + (isMine(r) ? ' mine' : '') + '">' + esc(r.cat) + '</span>' +
+      '<span class="dur">' + (r.dur ? mmss(r.dur) : '—') + '</span>' +
+      badge;
+
+    li.onclick = () => pick(r);
+    frag.appendChild(li);
+  }
+  listEl.innerHTML = '';
+  listEl.appendChild(frag);
+}
+
+/* ---- 播放 ---- */
+function srcOf(r, fmt){
+  if (isMine(r)){
+    if (r.m4a) return encRel(r.m4a);
+    if (r.abs) return absUrl(r.abs);
+    return null;
+  }
+  if (fmt === 'mp3') return r.mp3 ? encRel(r.mp3) : (r.m4a ? encRel(r.m4a) : null);
+  return r.m4a ? encRel(r.m4a) : null;
+}
+
+function pick(r){
+  if (!isLocal(r)){ toast('这首本地没有 —— 票据跟着服务器一起走了'); return; }
+  if (isMine(r) && r.codec && !PLAYABLE.includes(r.codec)){
+    toast('这个格式浏览器放不了（' + r.codec + '），用播放器打开原文件吧');
+    return;
+  }
+  current = r;
+  $('#nt').textContent = r.title;
+  $('#na').textContent = r.artist + ' · ' + r.cat;
+  $('#fmt').classList.toggle('hide', isMine(r));
+  audio.src = srcOf(r, format);
+  audio.load();
+  audio.play().catch(() => {});
+  render();
+}
+
+$('#play').onclick = () => {
+  if (!current){ toast('先点一首'); return; }
+  audio.paused ? audio.play().catch(() => {}) : audio.pause();
+};
+
+audio.onplay = () => { $('#play').textContent = '❙❙'; $('#disc').classList.add('spin'); };
+audio.onpause = () => { $('#play').textContent = '▶'; $('#disc').classList.remove('spin'); };
+audio.onended = () => {
+  const pool = rows.filter(isLocal);
+  const i = pool.findIndex(v => v.key === current.key);
+  if (i >= 0 && i < pool.length - 1) pick(pool[i + 1]);
+  else { $('#play').textContent = '▶'; $('#disc').classList.remove('spin'); }
+};
+audio.ontimeupdate = () => {
+  const d = audio.duration || 0;
+  $('#t1').textContent = mmss(audio.currentTime);
+  $('#t2').textContent = mmss(d);
+  $('#fill').style.width = d ? (audio.currentTime / d * 100) + '%' : '0';
+};
+audio.onloadedmetadata = () => { $('#t2').textContent = mmss(audio.duration); };
+audio.onerror = () => {
+  if (audio.src) toast('音频没加载出来，用 Edge / Chrome 直接打开本页试试');
+};
+
+$('#track').onclick = e => {
+  const box = e.currentTarget.getBoundingClientRect();
+  if (audio.duration) audio.currentTime = (e.clientX - box.left) / box.width * audio.duration;
+};
+$('#vol').oninput = e => { audio.volume = e.target.value / 100; };
+audio.volume = 0.85;
+
+$('#fmt').onclick = e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const k = b.dataset.k;
+  if (k === 'mp3' && current && !isMine(current) && !current.mp3){ toast('这首没转 mp3'); return; }
+  format = k;
+  [...$('#fmt').children].forEach(x => x.classList.toggle('on', x === b));
+  if (current && !isMine(current)){
+    const t = audio.currentTime;
+    audio.src = srcOf(current, k);
+    audio.load();
+    audio.addEventListener('loadedmetadata', function once(){
+      audio.currentTime = t;
+      audio.removeEventListener('loadedmetadata', once);
+    });
+  }
+};
+
+$('#chips').onclick = e => {
+  const b = e.target.closest('.chip');
+  if (!b) return;
+  filter = b.dataset.f;
+  [...$('#chips').children].forEach(x => x.classList.toggle('on', x === b));
+  render();
+};
+$('#q').oninput = e => { query = e.target.value.trim(); render(); };
+
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space' && e.target.tagName !== 'INPUT'){
+    e.preventDefault();
+    $('#play').click();
+  }
+});
+
+render();
+</script>
+</body>
+</html>
