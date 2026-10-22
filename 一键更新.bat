@@ -20,6 +20,6 @@ echo.
 if %RC% neq 0 (
   echo [X] Failed with code %RC%
 ) else (
-  echo [OK] Done. Open 曲库.html to listen.
+  echo [OK] Done. Double-click the html to listen.
 )
 pause
