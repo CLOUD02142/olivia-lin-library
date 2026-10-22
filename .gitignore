@@ -33,3 +33,6 @@ venv/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# 自动下载的 ffmpeg
+ffmpeg/
