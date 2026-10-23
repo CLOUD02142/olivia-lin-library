@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>林离存档 · 一个只存在了 45 天的曲库</title>
+<meta name="description" content="《BSide: Olivia Lin》2026 年 7 月 13 日上线、8 月 31 日关服。这是一份关于它 129 首曲目的考古记录：能找回多少、为什么找不回、以及还剩下什么。">
+<style>
+  :root{
+    --bg:#12100d;
+    --paper:#f3ece1;
+    --ink:#e9dfd1;
+    --ink-2:#a89a88;
+    --ink-3:#6f6559;
+    --line:rgba(233,224,209,.13);
+    --amber:#d99a52;
+    --amber-2:#f0c48a;
+    --brick:#a8503a;
+    --serif:"Songti SC","STSong","Noto Serif SC","SimSun",serif;
+    --sans:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+    --mono:Consolas,Monaco,"Courier New",monospace;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--bg);scroll-behavior:smooth}
+  body{
+    margin:0;color:var(--ink);font-family:var(--sans);line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(1100px 640px at 82% -8%, rgba(206,132,62,.16), transparent 62%),
+      radial-gradient(820px 520px at 2% 12%, rgba(150,66,42,.10), transparent 58%),
+      var(--bg);
+    background-attachment:fixed;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9;opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  a{color:var(--amber-2);text-decoration:none;border-bottom:1px solid rgba(240,196,138,.3)}
+  a:hover{border-bottom-color:var(--amber-2)}
+
+  .doc{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:64px 26px 90px}
+
+  /* ---------------- 封面 ---------------- */
+  .cover{border-bottom:1px solid var(--line);padding-bottom:34px;margin-bottom:40px}
+  .kicker{
+    font-size:11px;letter-spacing:.42em;color:var(--ink-3);text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  h1{
+    font-family:var(--serif);font-size:clamp(30px,5.2vw,46px);font-weight:600;
+    line-height:1.35;margin:0 0 18px;color:#fbf2e4;letter-spacing:.03em;
+  }
+  h1 em{font-style:normal;color:var(--amber)}
+  .dek{font-size:15px;color:var(--ink-2);margin:0 0 26px;max-width:34em}
+  .byline{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:11.5px;color:var(--ink-3);letter-spacing:.08em}
+  .byline b{color:var(--ink-2);font-weight:500}
+
+  /* ---------------- 数字 ---------------- */
+  .figures{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    margin:36px 0 8px;border:1px solid var(--line)}
+  .fig{background:rgba(255,240,220,.025);padding:18px 14px;text-align:center}
+  .fig b{display:block;font-family:var(--serif);font-size:26px;color:var(--amber-2);
+    font-variant-numeric:tabular-nums;line-height:1.2}
+  .fig span{display:block;font-size:10.5px;color:var(--ink-3);letter-spacing:.14em;margin-top:6px}
+
+  /* ---------------- 正文 ---------------- */
+  h2{
+    font-family:var(--serif);font-size:22px;font-weight:600;color:#f6ecdd;
+    margin:64px 0 20px;padding-top:22px;border-top:1px solid var(--line);
+    letter-spacing:.05em;display:flex;align-items:baseline;gap:14px;
+  }
+  h2 i{font-style:normal;font-size:11px;letter-spacing:.3em;color:var(--amber);
+    font-family:var(--sans);flex:0 0 auto;padding-bottom:2px}
+  h3{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);
+    margin:32px 0 10px;letter-spacing:.04em}
+  p{margin:0 0 18px;font-size:15px;color:var(--ink)}
+  p.lead{font-size:16.5px;color:#f0e6d6}
+  small{font-size:12.5px;color:var(--ink-3)}
+  strong{color:#fff5e6;font-weight:600}
+  em.hl{font-style:normal;background:linear-gradient(transparent 62%, rgba(217,154,82,.28) 62%);padding:0 2px}
+
+  blockquote{
+    margin:26px 0;padding:2px 0 2px 20px;border-left:2px solid var(--amber);
+    font-family:var(--serif);font-size:16px;color:#e8dccb;line-height:1.9;
+  }
+  blockquote cite{display:block;font-style:normal;font-size:11.5px;color:var(--ink-3);
+    font-family:var(--sans);margin-top:10px;letter-spacing:.06em}
+
+  /* ---------------- 时间线 ---------------- */
+  .tl{list-style:none;margin:24px 0 8px;padding:0 0 0 26px;position:relative}
+  .tl::before{content:"";position:absolute;left:5px;top:6px;bottom:10px;width:1px;
+    background:linear-gradient(var(--line),rgba(217,154,82,.5),var(--line))}
+  .tl li{position:relative;padding:0 0 22px}
+  .tl li::before{content:"";position:absolute;left:-25px;top:10px;width:7px;height:7px;
+    border-radius:50%;background:var(--bg);border:1px solid var(--amber)}
+  .tl li.end::before{background:var(--brick);border-color:var(--brick)}
+  .tl time{display:block;font-size:11px;letter-spacing:.14em;color:var(--amber);
+    font-variant-numeric:tabular-nums;margin-bottom:3px}
+  .tl b{display:block;font-family:var(--serif);font-size:15.5px;color:#f6ecdd;font-weight:600}
+  .tl span{font-size:13.5px;color:var(--ink-2)}
+
+  /* ---------------- 证据块 ---------------- */
+  .evidence{
+    margin:22px 0;border:1px solid var(--line);background:rgba(0,0,0,.24);
+    font-family:var(--mono);font-size:12px;line-height:1.9;overflow-x:auto;
+  }
+  .evidence .hd{
+    padding:7px 13px;border-bottom:1px solid var(--line);color:var(--ink-3);
+    font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;background:rgba(255,240,220,.03);
+  }
+  .evidence pre{margin:0;padding:13px;color:#cbbfae;white-space:pre}
+  .evidence .g{color:#8fbe7c}
+  .evidence .r{color:#d97b5b}
+  .evidence .y{color:var(--amber-2)}
+
+  table.code{width:100%;border-collapse:collapse;margin:18px 0;font-size:13px}
+  table.code th,table.code td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  table.code th{font-size:10.5px;letter-spacing:.16em;color:var(--ink-3);font-weight:500}
+  table.code td{color:var(--ink-2);font-family:var(--mono);font-size:12px}
+  table.code td.ok{color:#8fbe7c}
+  table.code td.bad{color:#d97b5b}
+
+  /* ---------------- 曲目表 ---------------- */
+  .lib{margin:26px 0 10px;border:1px solid var(--line);border-radius:3px;overflow:hidden;
+    background:rgba(255,240,220,.02)}
+  .lib-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 14px;
+    border-bottom:1px solid var(--line);background:rgba(0,0,0,.18)}
+  .chip{border:1px solid transparent;background:rgba(255,240,220,.05);color:var(--ink-2);
+    padding:4px 11px;border-radius:999px;font-size:11.5px;cursor:pointer;
+    font-family:var(--sans);letter-spacing:.04em;transition:.15s}
+  .chip:hover{color:var(--ink)}
+  .chip.on{background:rgba(217,154,82,.16);border-color:rgba(217,154,82,.45);color:var(--amber-2)}
+  .lib-bar input{
+    margin-left:auto;border:1px solid var(--line);background:rgba(0,0,0,.25);
+    border-radius:999px;padding:5px 13px;font-size:12px;width:150px;outline:none;
+    color:var(--ink);font-family:var(--sans);
+  }
+  .lib-bar input:focus{border-color:rgba(217,154,82,.5)}
+  .lib-bar input::placeholder{color:var(--ink-3)}
+  .lib-body{position:relative}
+  .lib-body::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38px;
+    background:linear-gradient(rgba(18,16,13,0), #14110e);pointer-events:none}
+  .lib-scroll{max-height:560px;overflow-y:auto}
+  .lib-scroll::-webkit-scrollbar{width:7px}
+  .lib-scroll::-webkit-scrollbar-thumb{background:rgba(233,224,209,.15);border-radius:4px}
+  table.songs{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.songs th{
+    position:sticky;top:0;background:#171310;text-align:left;padding:9px 12px;
+    font-size:10.5px;letter-spacing:.16em;color:var(--ink-3);font-weight:500;
+    border-bottom:1px solid var(--line);
+  }
+  table.songs td{padding:8px 12px;border-bottom:1px solid rgba(233,224,209,.06)}
+  table.songs tr:hover td{background:rgba(217,154,82,.06)}
+  table.songs .n{color:var(--ink-3);font-size:11.5px;font-variant-numeric:tabular-nums;width:34px}
+  table.songs .t{font-family:var(--serif);font-size:15px;color:#f2e7d6}
+  table.songs .c{color:var(--ink-2);font-size:12.5px;white-space:nowrap}
+  table.songs .k{color:var(--ink-3);font-size:10.5px;letter-spacing:.1em;white-space:nowrap}
+  .lib-foot{padding:10px 14px;border-top:1px solid var(--line);font-size:11.5px;
+    color:var(--ink-3);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  .note{margin:24px 0;padding:16px 18px;border:1px solid rgba(217,154,82,.22);
+    background:rgba(217,154,82,.06);border-radius:3px;font-size:13.5px;color:#e8d8bf}
+  .note b{color:var(--amber-2)}
+
+  ul.plain{margin:0 0 18px;padding-left:20px;font-size:14.5px;color:var(--ink)}
+  ul.plain li{margin-bottom:8px}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+    font-size:11.5px;color:var(--ink-3);line-height:2}
+  footer a{color:var(--ink-2);border-bottom-color:var(--line)}
+
+  @media(max-width:620px){
+    .doc{padding:38px 18px 60px}
+    .figures{grid-template-columns:repeat(2,1fr)}
+    table.songs .k{display:none}
+    .lib-bar input{width:100%;margin-left:0}
+    h2{font-size:19px}
+  }
+</style>
+</head>
+<body>
+<article class="doc">
+
+  <header class="cover">
+    <div class="kicker">Archive · 2026</div>
+    <h1>一个只存在了 <em>45 天</em> 的曲库</h1>
+    <p class="dek">
+      《BSide: Olivia Lin》给了一位虚构的上海钢琴少女 129 首曲子，然后关掉了取货的门。
+      这是一份关于它们能找回多少、为什么找不回、还想得起什么的记录。
+    </p>
+    <div class="byline">
+      <span>整理 <b>CLOUD02142</b></span>
+      <span>时间 <b>2026 年 10 月</b></span>
+      <span>方法 <b>本地缓存 / 客户端日志 / CDN 探测</b></span>
+      <span>源码 <a href="https://github.com/CLOUD02142/olivia-lin-library">GitHub</a></span>
+    </div>
+  </header>
+
+  <div class="figures">
+    <div class="fig"><b>45</b><span>在线天数</span></div>
+    <div class="fig"><b>129</b><span>曲目总数</span></div>
+    <div class="fig"><b>77</b><span>可考证曲目</span></div>
+    <div class="fig"><b>401</b><span>现在的回应</span></div>
+  </div>
+
+  <h2><i>01</i>它甚至不算一个游戏</h2>
+  <p class="lead">
+    2026 年 7 月 13 日，米哈游在 Steam 上架了一个免费软件，分类写的是「实用工具」。没有抽卡，没有战斗，
+    没有日常任务，也不收钱。主角叫林离（Olivia Lin），主修钢琴、辅修心理学，钟爱黑胶、老电影和雨天。
+  </p>
+  <p>
+    她能做的事只有三件：弹琴给你听、给她的信写回信、把自己贴在桌面上当动态壁纸。
+    曲库分三类 —— 古典、ACG、轻音乐，共 129 首。ACG 那一栏基本是米哈游自家的东西，
+    《神女劈观》《野火》之类的改编；而古典那一栏，是真正让人坐下来的部分：肖邦的练习曲、
+    李斯特的钟、德彪西的月光、格里格的夜曲。
+  </p>
+  <p>
+    8 月 11 日，官方发公告：停运。8 月 27 日，离线版上线。8 月 31 日 15:00，从商店下架，服务器关闭。
+    <em class="hl">从上线到结束，不到五十天。</em>
+  </p>
+
+  <h2><i>02</i>时间线</h2>
+  <ul class="tl">
+    <li><time>2025.08</time><b>角色预热</b><span>林离的形象在 B 站首次出现。</span></li>
+    <li><time>2026.03</time><b>读信回信视频</b><span>官方放出交互演示，定调「陪伴」而不是「恋爱」。</span></li>
+    <li><time>2026.07.13</time><b>抢先体验上线</b><span>Steam 免费，需绑定米哈游账号。上线首日好评率约 85%。</span></li>
+    <li><time>2026.08.11</time><b>停运公告</b><span>称「基于产品阶段性规划与后续安排」，同时宣布准备离线版。</span></li>
+    <li><time>2026.08.27 15:00</time><b>离线版上线</b><span>同时停止「写信」「上传 MIDI」等依赖在线服务的功能。</span></li>
+    <li class="end"><time>2026.08.31 15:00</time><b>下架 · 关服</b><span>服务器正式关闭，此后在线内容与数据无法再查看或恢复。</span></li>
+  </ul>
+
+  <h2><i>03</i>她是怎么「弹」的</h2>
+  <p>
+    这一点决定了后面所有事情：<strong>林离弹琴不是实时渲染，也不是实时演奏。</strong>
+    每一首曲子都是一段预录的 2K 视频，从不同机位拍下的真实演奏动作，单曲 150–280 MB。
+    你看到手指敲下哪个键，是因为那段视频里她确实敲了那个键。
+  </p>
+  <p>
+    这些视频<strong>不随安装包下发</strong>。安装包里只有待机和壁纸镜头（约 3 GB），曲库是空的。
+    你想听哪首，就得先「下载」它 —— 而这个「下载」是整个产品最脆弱的一环。
+  </p>
+  <p>
+    点下按钮之后，客户端向服务器请求一条链接，服务器当场签发，链接里带一个会过期的签名，有效期一到三天。
+    客户端拿着这条链接去 CDN 取货，存进本地缓存：
+  </p>
+  <div class="evidence">
+    <div class="hd">本地缓存路径</div>
+    <pre>%APPDATA%\miHoYo\Olivia-steam\cache\studio\video\
+    └ Solo_Canon_In_D\
+        ├ Solo_Canon_In_D_TOD1200_NI_L.mp4   （正午光）
+        ├ Solo_Canon_In_D_TOD1730_NI_L.mp4   （黄昏光）
+        └ Solo_Canon_In_D_TOD2000_NI_L.mp4   （夜间光）</pre>
+  </div>
+  <p>
+    顺带一个实测结论：这三个时段版本<strong>是同一次演奏</strong>。
+    响度均值 −23.0 dB、峰值 −3.2 dB，三者分毫不差，只是打光与编码不同。
+  </p>
+
+  <h2><i>04</i>关服那天，到底断了什么</h2>
+  <p>
+    直觉上，关服意味着「在线功能没了」。但这里断掉的东西更彻底，值得一条条摆出来。
+  </p>
+
+  <h3>证据一：那条链接长这样</h3>
+  <div class="evidence">
+    <div class="hd">从客户端日志里捞出来的历史请求（签名已过期）</div>
+    <pre><span class="y">https://static-cnbeta01.olivia.miyoushe.com</span>/resVideo/2k_PCLite_v0.0.20/
+  Solo_Canon_In_D/Solo_Canon_In_D_TOD1200_NI_L.mp4
+  ?auth_key=<span class="r">1786010752</span>-566ab1df…-0-90169ce2…
+
+           ↑ 过期时间戳   ↑ 随机串  ↑ uid ↑ 签名</pre>
+  </div>
+  <p>
+    这是阿里云 CDN 的 Type-A 鉴权：<code>auth_key = 过期时间 - 随机串 - uid - 签名</code>。
+    签名由服务端的私钥算出，客户端只负责携带。换句话说，<strong>钥匙从来不在这台电脑上。</strong>
+  </p>
+
+  <h3>证据二：CDN 还活着，只是不给货</h3>
+  <table class="code">
+    <tr><th>请求</th><th>结果</th></tr>
+    <tr><td>static-cnbeta01…/resVideo/…mp4（裸连）</td><td class="bad">401 Unauthorized</td></tr>
+    <tr><td>同上（加 Referer、User-Agent）</td><td class="bad">401 Unauthorized</td></tr>
+    <tr><td>static-cnbeta01…/resSong/…jpg（裸连）</td><td class="bad">401 Unauthorized</td></tr>
+  </table>
+  <p>
+    域名解析正常、TLS 握手正常、返回的是一个完整的错误页 ——
+    <em class="hl">机器活着，门锁着</em>。它只是不认识没有签名的访客。
+  </p>
+
+  <h3>证据三：签发链接的服务器，全没了</h3>
+  <table class="code">
+    <tr><th>域名</th><th>用途</th><th>状态</th></tr>
+    <tr><td>dispatcher.olivia.miyoushe.com</td><td>调度</td><td class="bad">520</td></tr>
+    <tr><td>pf-api-cnbeta01.olivia.miyoushe.com</td><td>业务接口</td><td class="bad">520</td></tr>
+    <tr><td>globalgw-cnbeta01.olivia.miyoushe.com</td><td>网关</td><td class="bad">522</td></tr>
+    <tr><td>toy-cnbeta01.olivia.miyoushe.com</td><td>曲库 / 信件</td><td class="bad">503</td></tr>
+  </table>
+  <p>
+    520、522 是 CDN 找不到源站的报错。源站已经不存在了，不是维护，是没了。
+  </p>
+
+  <h3>证据四：客户端自己也不会签名</h3>
+  <p>
+    我把客户端目录翻了一遍：主程序、十几个 <code>Nut*.dll</code>、前端资源包、
+    以及那个 1.1 MB 的加密曲目表 <code>songlist.dat</code>。
+    <strong>没有一个文件里出现 <code>auth_key</code>、<code>resVideo</code> 这类字符串</strong> ——
+    二进制是打包过的，而且逻辑上也不需要它：签名本来就该由服务器算。
+  </p>
+
+  <blockquote>
+    所以，「下载功能失效」这个说法是错的。<br>
+    功能还在，按钮还能点，只是按下之后，没有人在另一头签发通行证了。
+    <cite>—— 这不是被阉割，是钥匙随服务端一起消失</cite>
+  </blockquote>
+
+  <h2><i>05</i>那么，还剩下什么</h2>
+  <ul class="plain">
+    <li><strong>你当时下载过的那些视频</strong> —— 如果你没删缓存、没重装系统，它们还在硬盘上。</li>
+    <li><strong>一份 77 首的曲目清单</strong> —— 从客户端日志和 CEF 缓存索引里还原出来的，占总数的六成。</li>
+    <li><strong>一个明确的边界</strong> —— 知道哪些能救、哪些永远救不回来，比抱着侥幸强。</li>
+  </ul>
+  <p>
+    这也解释了为什么离线版装完，曲库是空的：离线版只保证「已经在你硬盘上的东西还能听」，
+    它没有能力把没下载过的曲子变出来。
+  </p>
+
+  <div class="note">
+    <b>如果你现在还留着那个缓存目录，先别删。</b>
+    它可能是这些演奏版本在世界上的最后一份副本。抽成音频只要几分钟，
+    而客户端能撑到哪一年的 Windows，谁也说不准。
+  </div>
+
+  <h2><i>06</i>曲目清单</h2>
+  <p>
+    下面这 77 首是能从缓存与日志里对号入座的部分。古典一栏里的曲目基本都是公有领域作品 ——
+    作曲家去世早已超过版权保护期，<strong>但林离的这版演奏录音不是</strong>。
+    如果只是想再听这些旋律，任何平台按名字都能找到别的录音；想听她弹的那一版，就只能指望硬盘。
+  </p>
+
+  <div class="lib">
+    <div class="lib-bar" id="bar">
+      <button class="chip on" data-f="all">全部</button>
+      <button class="chip" data-f="古典">古典</button>
+      <button class="chip" data-f="原创">原创</button>
+      <button class="chip" data-f="弹唱">弹唱</button>
+      <input id="q" placeholder="搜曲名 / 作曲家">
+    </div>
+    <div class="lib-body">
+    <div class="lib-scroll">
+      <table class="songs">
+        <thead><tr><th class="n">#</th><th>曲名</th><th>作曲家</th><th class="k">分类</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    </div>
+    <div class="lib-foot">
+      <span id="count"></span>
+      <span>资源名即客户端内的目录名，可据此在自己缓存里查找</span>
+    </div>
+  </div>
+
+  <h2><i>07</i>如果你手上正好有那个缓存</h2>
+  <p>
+    不需要装任何东西，ffmpeg 一行命令就能把音轨原样取出来（视频里是 AAC，直接拷贝不损失任何质量）：
+  </p>
+  <div class="evidence">
+    <div class="hd">命令行 · 无损抽出音轨</div>
+    <pre>ffmpeg -i Solo_Canon_In_D_TOD1200_NI_L.mp4 \
+       -vn -c:a copy <span class="y">Canon_In_D.m4a</span>
+
+<span class="g"># 想要 mp3 就换编码器（会二次压缩，不推荐除非设备只认 mp3）</span>
+ffmpeg -i Solo_Canon_In_D_TOD1200_NI_L.mp4 \
+       -vn -c:a libmp3lame -b:a 256k <span class="y">Canon_In_D.mp3</span></pre>
+  </div>
+  <p>
+    想批量做、顺便把封面和标签写进去，可以用我整理这套东西时写的脚本：<br>
+    <a href="https://github.com/CLOUD02142/olivia-lin-library">github.com/CLOUD02142/olivia-lin-library</a>
+    <small>—— 它能扫出缓存里的所有曲目、按三态分类、抽音轨并生成一个本地播放页。不上传、不联网、不绕过任何鉴权。</small>
+  </p>
+
+  <h2><i>08</i>这类事只会越来越多</h2>
+  <p>
+    一个免费产品关停，损失看起来微不足道 —— 反正你没花钱。但这里丢掉的东西有点特别：
+    它不是数据，不是账号，是一批<strong>只存在于某个已关闭服务背后的录音</strong>。
+    没有实体唱片，没有数字商店，没有盗版资源（因为没人屑于盗一个上线 45 天的免费工具）。
+  </p>
+  <p>
+    我们习惯了把「在线」当成一种属性，其实它是一份租约。
+    租约到期那天，你拥有的东西会精确地收敛为<strong>那些已经落在你硬盘上的字节</strong>，
+    一个不多，一个不少。
+  </p>
+  <p>
+    林离在设定里说，她正在做一项关于「音乐与回忆」的研究。
+    这个产品最后留下的，恰好就是一份这样的样本：
+    <em class="hl">129 首曲子，45 天，和一台还亮着 401 的服务器。</em>
+  </p>
+
+  <footer>
+    本文基于本地客户端缓存、运行日志与公开报道整理，不含任何音频文件。<br>
+    曲目著作权归米哈游及原权利人所有；文中提及的接口与签名机制仅用于说明失效原因，不构成绕过手段。<br>
+    勘误与补充：<a href="https://github.com/CLOUD02142/olivia-lin-library/issues">提交 issue</a>
+  </footer>
+
+</article>
+
+<script>
+const SONGS = [{"i": 1, "title": "G弦上的咏叹调", "artist": "巴赫", "cat": "古典", "key": "Solo_Air_On_The_G_String_From_Orchestral_Suite_No3_In_D_Major_BWV_1068"}, {"i": 2, "title": "阿拉伯风格曲 第二首", "artist": "德彪西", "cat": "古典", "key": "Solo_Arabesque_No2"}, {"i": 3, "title": "悲怆奏鸣曲 第二乐章", "artist": "贝多芬", "cat": "古典", "key": "Solo_Beethoven_Piano_Sonata_No8_In_C_Minor_Op13_2_Adagio_Cantabile"}, {"i": 4, "title": "D大调卡农", "artist": "帕赫贝尔", "cat": "古典", "key": "Solo_Canon_In_D"}, {"i": 5, "title": "练习曲 Op.10 No.1", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Etude_Op10_No1"}, {"i": 6, "title": "革命练习曲", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Etude_Op10_No12"}, {"i": 7, "title": "离别练习曲", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Etude_Op10_No3"}, {"i": 8, "title": "黑键练习曲", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Etude_Op10_No5"}, {"i": 9, "title": "练习曲 Op.10 No.8", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Etude_Op10_No8"}, {"i": 10, "title": "练习曲 Op.10 No.9", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Etude_Op10_No9"}, {"i": 11, "title": "大海练习曲", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Etude_Op25_No12_In_C_Minor"}, {"i": 12, "title": "蜜蜂练习曲", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Etude_Op25_No2"}, {"i": 13, "title": "夜曲 Op.9 No.2", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Nocturne_Op9_No2"}, {"i": 14, "title": "练习曲 Op.25 No.3", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Op25_No3"}, {"i": 15, "title": "前奏曲 Op.28 No.4", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Op28_No4"}, {"i": 16, "title": "军队波兰舞曲", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Op40_No1"}, {"i": 17, "title": "圆舞曲 Op.64 No.2", "artist": "肖邦", "cat": "古典", "key": "Solo_Chopin_Op64_No2"}, {"i": 18, "title": "安慰曲 第三首", "artist": "李斯特", "cat": "古典", "key": "Solo_Consolation_No3_In_D_Flat_Major"}, {"i": 19, "title": "克罗地亚狂想曲", "artist": "马克西姆", "cat": "古典", "key": "Solo_Croatian_Rhapsody"}, {"i": 20, "title": "侏儒之舞", "artist": "李斯特", "cat": "古典", "key": "Solo_Dance_Of_The_Gnomes_No2"}, {"i": 21, "title": "月光", "artist": "德彪西", "cat": "古典", "key": "Solo_Debussy_Moonlight"}, {"i": 22, "title": "梦幻曲", "artist": "德彪西", "cat": "古典", "key": "Solo_Debussy_Reverie"}, {"i": 23, "title": "野蜂飞舞（爵士版）", "artist": "里姆斯基-科萨科夫", "cat": "古典", "key": "Solo_Flight_Of_The_Bumblebee_Jazz_Version"}, {"i": 24, "title": "华丽大波兰舞曲 Op.22（上）", "artist": "肖邦", "cat": "古典", "key": "Solo_Grande_Polonaise_Brillante_Op22_P1"}, {"i": 25, "title": "华丽大波兰舞曲 Op.22（下）", "artist": "肖邦", "cat": "古典", "key": "Solo_Grande_Polonaise_Brillante_Op22_P2"}, {"i": 26, "title": "裸体歌舞 第一号", "artist": "萨蒂", "cat": "古典", "key": "Solo_Gymnopedie_No1"}, {"i": 27, "title": "月光下的裸体歌舞", "artist": "萨蒂 / 德彪西", "cat": "古典", "key": "Solo_Gymnopedies_Of_Lune"}, {"i": 28, "title": "即兴曲 Op.90 No.3", "artist": "舒伯特", "cat": "古典", "key": "Solo_Impromptu_In_G_Flat_Major_Op90_No3"}, {"i": 29, "title": "星空", "artist": "理查德·克莱德曼", "cat": "古典", "key": "Solo_Lyphard_Melody"}, {"i": 30, "title": "小狗圆舞曲", "artist": "肖邦", "cat": "古典", "key": "Solo_Minute_Waltz_Op64_No1"}, {"i": 31, "title": "音乐瞬间 第三首", "artist": "舒伯特", "cat": "古典", "key": "Solo_Moment_Musical_No3_In_F_Minor_Op94"}, {"i": 32, "title": "夜曲 第三首", "artist": "肖邦", "cat": "古典", "key": "Solo_Nocturne_No3_In_B_Major_For_Piano_Solo"}, {"i": 33, "title": "夜曲 Op.54 No.4", "artist": "格里格", "cat": "古典", "key": "Solo_Notturno_Op_54_No4"}, {"i": 34, "title": "逝去公主的帕凡舞曲", "artist": "拉威尔", "cat": "古典", "key": "Solo_Pavane_For_A_Dead_Princess"}, {"i": 35, "title": "钢琴奏鸣曲 K.333", "artist": "莫扎特", "cat": "古典", "key": "Solo_Piano_Sonata_No13_K333"}, {"i": 36, "title": "钢琴奏鸣曲 K.545", "artist": "莫扎特", "cat": "古典", "key": "Solo_Piano_Sonata_No16_K545"}, {"i": 37, "title": "暴风雨奏鸣曲 第一乐章", "artist": "贝多芬", "cat": "古典", "key": "Solo_Piano_Sonata_No17_In_D_Minor_Op31_No2_Tempest_1_Largo"}, {"i": 38, "title": "平均律 C小调 前奏曲", "artist": "巴赫", "cat": "古典", "key": "Solo_Prelude_And_Fugue_In_C_Minor_BWV_847_P1"}, {"i": 39, "title": "平均律 C小调 赋格", "artist": "巴赫", "cat": "古典", "key": "Solo_Prelude_And_Fugue_In_C_Minor_BWV_847_P2"}, {"i": 40, "title": "前奏曲 Op.23 No.5", "artist": "拉赫玛尼诺夫", "cat": "古典", "key": "Solo_Prelude_In_G_Minor_Op23_No5"}, {"i": 41, "title": "西班牙狂想曲（上）", "artist": "李斯特", "cat": "古典", "key": "Solo_Rhapsodie_Espagnole_S254_P1"}, {"i": 42, "title": "西班牙狂想曲（下）", "artist": "李斯特", "cat": "古典", "key": "Solo_Rhapsodie_Espagnole_S254_P2"}, {"i": 43, "title": "奏鸣曲 K.213", "artist": "斯卡拉蒂", "cat": "古典", "key": "Solo_Scarlatti_Sonata_In_D_Minor_K213"}, {"i": 44, "title": "梦幻曲", "artist": "舒曼", "cat": "古典", "key": "Solo_Scene_From_Childhood_Op15_No7_Dreaming"}, {"i": 45, "title": "蝴蝶 Op.2", "artist": "舒曼", "cat": "古典", "key": "Solo_Schumann_Papillons_Op2"}, {"i": 46, "title": "练习曲 Op.19 No.2", "artist": "斯克里亚宾", "cat": "古典", "key": "Solo_Scriabin_Etude_In_C_Sharp_Minor_Op19_No2"}, {"i": 47, "title": "无词歌 Op.67 No.2", "artist": "门德尔松", "cat": "古典", "key": "Solo_Song_Without_Words_Op67_No2"}, {"i": 48, "title": "钟", "artist": "李斯特", "cat": "古典", "key": "Solo_The_Little_Bell_No3"}, {"i": 49, "title": "十月 · 秋之歌", "artist": "柴可夫斯基", "cat": "古典", "key": "Solo_The_Seasons_Op_37a_X_October_Autumn_Song"}, {"i": 50, "title": "天鹅", "artist": "圣-桑", "cat": "古典", "key": "Solo_The_Swan"}, {"i": 51, "title": "暮色中的梦 第一乐章", "artist": "理查·施特劳斯", "cat": "古典", "key": "Solo_Traum_Durch_Die_Dammerung_Erster_Satz"}, {"i": 52, "title": "土耳其进行曲", "artist": "莫扎特", "cat": "古典", "key": "Solo_Turkish_March"}, {"i": 53, "title": "梦中的婚礼", "artist": "理查德·克莱德曼", "cat": "古典", "key": "Solo_Wedding_Of_Love"}, {"i": 54, "title": "云海之上", "artist": "米哈游", "cat": "原创", "key": "Solo_Above_The_Sea_Of_Clouds"}, {"i": 55, "title": "空灵温柔", "artist": "米哈游", "cat": "原创", "key": "Solo_Ethereal_Mildness"}, {"i": 56, "title": "花散里", "artist": "米哈游", "cat": "原创", "key": "Solo_Hanachirusato"}, {"i": 57, "title": "璀璨星辰", "artist": "米哈游", "cat": "原创", "key": "Solo_Lustrous_Stars"}, {"i": 58, "title": "曾几何时的欢梦", "artist": "米哈游", "cat": "原创", "key": "Solo_Once-Joyful_Dream"}, {"i": 59, "title": "庆云顶", "artist": "米哈游", "cat": "原创", "key": "Solo_Qingyun_Peak_Theme"}, {"i": 60, "title": "灵光共鸣", "artist": "米哈游", "cat": "原创", "key": "Solo_Resonance_Of_Khvarena"}, {"i": 61, "title": "沉入忘却", "artist": "米哈游", "cat": "原创", "key": "Solo_Sink_Into_Oblivion"}, {"i": 62, "title": "微风轻啜", "artist": "米哈游", "cat": "原创", "key": "Solo_Sipping_In_The_Soft_Breeze"}, {"i": 63, "title": "星之独白", "artist": "米哈游", "cat": "原创", "key": "Solo_Soliloquy_Of_The_Star"}, {"i": 64, "title": "毁灭与救赎", "artist": "米哈游", "cat": "弹唱", "key": "PlaySing_Devastation_And_Redemption_Ziyun_original"}, {"i": 65, "title": "粉刷匠", "artist": "儿歌", "cat": "弹唱", "key": "PlaySing_Fen_Shua_Jiang_Ziyun_original"}, {"i": 66, "title": "两只老虎", "artist": "儿歌", "cat": "弹唱", "key": "PlaySing_Liang_Zhi_Lao_Hu_Ziyun_original"}, {"i": 67, "title": "茉莉花", "artist": "民歌", "cat": "弹唱", "key": "PlaySing_Mo_Li_Hua_Ziyun_original"}, {"i": 68, "title": "挪德卡莱", "artist": "米哈游", "cat": "弹唱", "key": "PlaySing_Nod-Krai_Ziyun_original"}, {"i": 69, "title": "兰那罗的旋律", "artist": "米哈游", "cat": "弹唱", "key": "PlaySing_Ruu_Melody_Ziyun_original"}, {"i": 70, "title": "生日快乐歌", "artist": "儿歌", "cat": "弹唱", "key": "PlaySing_Sheng_Ri_Kuai_Le_Ge_Ziyun_original"}, {"i": 71, "title": "送别", "artist": "李叔同", "cat": "弹唱", "key": "PlaySing_Song_Bie_Ziyun_original"}, {"i": 72, "title": "古老的艄公之韵 III", "artist": "米哈游", "cat": "弹唱", "key": "PlaySing_The_Rime_Of_The_Ancient_Bargeman_III_Ziyun_original"}, {"i": 73, "title": "外婆桥", "artist": "儿歌", "cat": "弹唱", "key": "PlaySing_Wai_Po_Qiao_Ziyun_original"}, {"i": 74, "title": "小兔子乖乖", "artist": "儿歌", "cat": "弹唱", "key": "PlaySing_Xiao_Tu_Zi_Guai_Guai_Ziyun_original"}, {"i": 75, "title": "摇篮曲", "artist": "勃拉姆斯", "cat": "弹唱", "key": "PlaySing_Yao_Lan_Qu_Ziyun_original"}, {"i": 76, "title": "友谊地久天长", "artist": "民歌", "cat": "弹唱", "key": "PlaySing_You_Yi_Di_Jiu_Tian_Chang_Ziyun_original"}, {"i": 77, "title": "找朋友", "artist": "儿歌", "cat": "弹唱", "key": "PlaySing_Zhao_Peng_You_Ziyun_original"}];
+const STATS = {"古典": 53, "原创": 10, "弹唱": 14};
+
+const rowsEl = document.getElementById('rows');
+const qEl = document.getElementById('q');
+const countEl = document.getElementById('count');
+let filter = 'all', kw = '';
+
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function paint(){
+  const list = SONGS.filter(s => {
+    if (filter !== 'all' && s.cat !== filter) return false;
+    if (kw && !(s.title + ' ' + s.artist + ' ' + s.key).toLowerCase().includes(kw)) return false;
+    return true;
+  });
+  rowsEl.innerHTML = list.map(s =>
+    '<tr><td class="n">' + String(s.i).padStart(2,'0') + '</td>' +
+    '<td class="t">' + esc(s.title) + '</td>' +
+    '<td class="c">' + esc(s.artist) + '</td>' +
+    '<td class="k">' + esc(s.cat) + '</td></tr>'
+  ).join('');
+  countEl.textContent = '显示 ' + list.length + ' / ' + SONGS.length + ' 首　·　'
+    + '古典 ' + STATS['古典'] + '　·　原创 ' + STATS['原创'] + '　·　弹唱 ' + STATS['弹唱'];
+}
+
+document.getElementById('bar').addEventListener('click', e => {
+  const c = e.target.closest('.chip');
+  if (!c) return;
+  filter = c.dataset.f;
+  [...document.querySelectorAll('.chip')].forEach(x => x.classList.toggle('on', x === c));
+  paint();
+});
+qEl.addEventListener('input', () => { kw = qEl.value.trim().toLowerCase(); paint(); });
+
+paint();
+</script>
+</body>
+</html>
