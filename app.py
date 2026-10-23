@@ -447,21 +447,63 @@ class LocalServer(ThreadingHTTPServer):
     daemon_threads = True
 
 
-def find_running(timeout=0.7):
-    """先看看是不是已经有一个实例在跑，避免开出一堆重复服务。"""
+def _lock_file():
+    return core.DATA_DIR / "server.json"
+
+
+def read_lock():
+    """上次跑在哪个端口。有锁文件就只探这一个，别去扫 80 个端口。"""
+    try:
+        d = json.loads(_lock_file().read_text(encoding="utf-8"))
+        return int(d["port"])
+    except Exception:
+        return None
+
+
+def write_lock(port):
+    try:
+        core.DATA_DIR.mkdir(parents=True, exist_ok=True)
+        _lock_file().write_text(json.dumps({"port": port, "pid": os.getpid()}),
+                                encoding="utf-8")
+    except Exception:
+        pass
+
+
+def clear_lock():
+    try:
+        _lock_file().unlink(missing_ok=True)
+    except Exception:
+        pass
+
+
+def ping_port(port, timeout=1.2):
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-    for port in PORT_RANGE:
-        try:
-            with opener.open(f"http://{HOST}:{port}/api/ping", timeout=timeout) as r:
-                body = r.read(200)
-                if b'"v"' in body:
-                    return port
-        except Exception:
-            continue
+    try:
+        with opener.open(f"http://{HOST}:{port}/api/ping", timeout=timeout) as r:
+            return b'"v"' in r.read(200)
+    except Exception:
+        return False
+
+
+def find_running():
+    """先看锁文件；没有就退化成只看前几个端口，绝不扫满 80 个。"""
+    port = read_lock()
+    if port:
+        if ping_port(port):
+            return port
+        clear_lock()
+    for p in list(PORT_RANGE)[:4]:
+        if ping_port(p, timeout=0.4):
+            return p
     return None
 
 
 def main():
+    try:
+        sys.stdout.reconfigure(line_buffering=True)   # 窗口里要能立刻看到地址
+        sys.stderr.reconfigure(line_buffering=True)
+    except Exception:
+        pass
     core.load_config()
 
     running = find_running()
@@ -486,6 +528,7 @@ def main():
         sys.exit(1)
 
     url = f"http://{HOST}:{srv.server_address[1]}/"
+    write_lock(srv.server_address[1])
     print("=" * 52)
     print("  林离 · 书房")
     print(f"  界面地址：{url}")
@@ -498,6 +541,7 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
+        clear_lock()
         srv.server_close()
 
 
